@@ -4,9 +4,12 @@ import tools from "./tools";
 
 export default ({ config, db }) => {
   let api = Router();
-  api.use("/tools", tools({ config, db }));
-  api.get("/", (res, req) => {
-    res.json({ version });
+  const app = { config, db };
+
+  api.use("/tools", tools(app));
+
+  api.get("/", (req, res) => {
+    res.status(501).json({});
   });
 
   return api;

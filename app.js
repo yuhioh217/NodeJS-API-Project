@@ -6,6 +6,7 @@ import cors from "cors"; // CORS is a node.js package for providing a Connect/Ex
 import bodyParser from "body-parser";
 import session from "express-session";
 import uuid from "uuid/v4";
+import connectMongo from "connect-mongo";
 import SessionStore from "./lib/SessionStore";
 import config from "./config.json";
 import initializeDB from "./db";
@@ -32,7 +33,6 @@ switch (process.env.NODE_ENV) {
   default:
     app.use(morgan("dev")); // Log with dev Color;
 }
-
 app.use(
   cors({
     exposeHeaders: config.corsHeaders
@@ -41,6 +41,7 @@ app.use(
 
 app.use(bodyParser.json({ limit: config.bodyLimit }));
 
+const MongoStore = connectMongo(session);
 app.use(
   session({
     genid: () => uuid(),
@@ -52,7 +53,7 @@ app.use(
       secure: false
     },
     saveUninitialized: false,
-    store: new SessionStore(session)
+    store: new MongoStore({ url: config.database.url + config.database.DB })
   })
 );
 
