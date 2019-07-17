@@ -1,20 +1,34 @@
 import resource from "./resource-router-middleware";
+import { getAllData } from "../model/mongoController.js";
 import tools from "../model/tools";
 
 export default ({ config, db }) =>
   resource({
     mergeParams: true,
-    id: "tools",
+    id: "user",
 
-    load(res, id, callback) {
-      let tool = tools.find(tool => tool.id.toString() === id),
-        err = tool ? null : "Not found";
-      //console.log(tool);
-      callback(err, tool);
+    // load the basic id parameter, and check the data id is exist in Mongodb or not.
+    load(req, id, callback) {
+      // console.log(db);
+      getAllData(db, (err, dataArr) => {
+        if (err) {
+          callback(err, null);
+        }
+        let data = dataArr.find(data => data.id.toString() === id),
+          errMesg = data ? null : "Not found the element";
+        callback(errMesg, data);
+      });
     },
 
+    /**
+     * List all users data.
+     *
+     * GET /
+     */
     list({ params }, res) {
-      res.json({ params });
+      getAllData(db, (err, data) => {
+        res.json({ result: data });
+      });
     },
 
     create({ body }, res) {

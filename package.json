@@ -8,6 +8,7 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "memorystore": "^1.6.1",
+    "mongodb": "^3.2.7",
     "morgan": "^1.9.1",
     "resource-router-middleware": "^0.7.0",
     "uuid": "^3.3.2"
