@@ -1,6 +1,6 @@
-# NodeJS API Project
+# NoeJS API Project
 
-* Install the module babel
+- Install the module babel
 
 ```
 {
@@ -20,7 +20,7 @@
 }
 ```
 
-* And Setup the .babelrc in the same directory with package.json
+- And Setup the .babelrc in the same directory with package.json
 
 ```
 {
@@ -28,9 +28,36 @@
 }
 ```
 
-* Then run
+- Then run
 
 ```
 npm start
 ```
+
+
+
+## Connect to MongoDB in Middleware (Current is local test)
+
+
+
+```config.json
+{
+  "port": 3000,
+  "bodyLimit": "100kb",
+  "corsHeaders": ["Link"],
+  "database": {
+    "url": "mongodb://localhost:27017/",
+    "DB": "UserAuth",
+    "collection": "UserData"
+  }
+}
+```
+
+
+
+# 
+
+
+
+
 
